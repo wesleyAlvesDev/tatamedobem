@@ -1,0 +1,23 @@
+<section class="auth-shell">
+  <article class="auth-card panel">
+    <p class="eyebrow">Cadastro de usuário</p>
+    <h1>Novo acesso</h1>
+    <p class="muted">Crie um usuário para acessar o sistema com CPF e senha.</p>
+
+    <form [formGroup]="form" class="stack" (ngSubmit)="submit()">
+      <div class="field-grid single">
+        <input formControlName="fullName" placeholder="Nome completo">
+        <input formControlName="cpf" placeholder="CPF">
+        <input formControlName="password" type="password" placeholder="Senha">
+        <select formControlName="role">
+          <option value="ADMIN">Administrador</option>
+          <option value="TEACHER">Professor</option>
+          <option value="STAFF">Equipe</option>
+        </select>
+      </div>
+      <button class="btn accent" type="submit" [disabled]="form.invalid">Cadastrar</button>
+    </form>
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </article>
+</section>

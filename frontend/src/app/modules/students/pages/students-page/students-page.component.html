@@ -1,0 +1,54 @@
+<section class="grid cards-3">
+  <article class="panel form-panel">
+    <div class="section-title">
+      <h2>Novo aluno</h2>
+      <span class="muted">cadastro rápido</span>
+    </div>
+    <form [formGroup]="form" class="stack" (ngSubmit)="save()">
+      <div class="field-grid">
+        <input formControlName="fullName" placeholder="Nome completo">
+        <input formControlName="documentNumber" placeholder="CPF/RG/certidão">
+        <input formControlName="birthDate" type="date" placeholder="Nascimento">
+        <input formControlName="guardianName" placeholder="Responsável">
+        <input formControlName="guardianPhone" placeholder="Telefone do responsável">
+        <input formControlName="schoolName" placeholder="Escola">
+        <input formControlName="schoolGrade" placeholder="Série">
+        <input formControlName="donatedGiSize" placeholder="Tamanho do kimono">
+        <select formControlName="currentBelt">
+          <option value="WHITE">Faixa branca</option>
+          <option value="GREY">Faixa cinza</option>
+          <option value="YELLOW">Faixa amarela</option>
+          <option value="ORANGE">Faixa laranja</option>
+          <option value="GREEN">Faixa verde</option>
+          <option value="BLUE">Faixa azul</option>
+        </select>
+      </div>
+      <button class="btn accent" type="submit" [disabled]="form.invalid">Salvar aluno</button>
+    </form>
+  </article>
+
+  <article class="panel list-panel">
+    <div class="section-title">
+      <h2>Alunos cadastrados</h2>
+      <span class="muted">base atual</span>
+    </div>
+    <table class="data-table" *ngIf="students$ | async as students">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Faixa</th>
+          <th>Escola</th>
+          <th>Kimono</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let student of students">
+          <td>{{ student.fullName }}</td>
+          <td>{{ student.currentBelt }}</td>
+          <td>{{ student.schoolName }}</td>
+          <td>{{ student.donatedGiSize }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+</section>

@@ -1,0 +1,58 @@
+<section class="flash-success panel" *ngIf="flashMessage">
+  {{ flashMessage }}
+</section>
+
+<section class="grid cards-4" *ngIf="vm$ | async as vm">
+  <article class="panel metric" *ngFor="let card of vm.metrics">
+    <span>{{ card.label }}</span>
+    <strong>{{ card.value }}</strong>
+  </article>
+</section>
+
+<section class="grid cards-3 dashboard-grid" *ngIf="vm$ | async as vm">
+  <article class="panel card-large">
+    <div class="section-title">
+      <h2>Relatorio para patrocinadores</h2>
+      <span class="pill success">{{ vm.report.semesterLabel }}</span>
+    </div>
+    <p class="impact">{{ vm.report.impactMessage }}</p>
+    <div class="stats-row">
+      <div><strong>{{ vm.report.attendanceRate }}%</strong><span>Presenca media</span></div>
+      <div><strong>{{ vm.report.championshipWinners }}</strong><span>Campeoes</span></div>
+      <div><strong>{{ vm.report.zeroDropoutCount }}</strong><span>Sem evasao</span></div>
+    </div>
+  </article>
+
+  <article class="panel card-large">
+    <div class="section-title">
+      <h2>Alertas rapidos</h2>
+      <span class="muted">faltas e estoque</span>
+    </div>
+    <div class="stack">
+      <div *ngFor="let alert of vm.attendanceAlerts.slice(0, 4)" class="alert-row">
+        <strong>{{ alert.studentName }}</strong>
+        <span class="muted">2 faltas seguidas em {{ alert.attendanceDate | date:'dd/MM/yyyy' }}</span>
+      </div>
+      <div *ngFor="let item of vm.inventoryAlerts.slice(0, 3)" class="alert-row">
+        <strong>{{ item.itemName }}</strong>
+        <span class="muted">estoque {{ item.quantityAvailable }}/minimo {{ item.minimumStock }}</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="panel card-large mural">
+    <div class="section-title">
+      <h2>Mural de conquistas</h2>
+      <span class="muted">captacao e impacto</span>
+    </div>
+    <div class="stack">
+      <div *ngFor="let achievement of vm.achievements.slice(0, 3)" class="achievement">
+        <div class="thumb" [style.background-image]="'url(' + (achievement.imageUrl || fallbackImage) + ')'"></div>
+        <div>
+          <strong>{{ achievement.title }}</strong>
+          <p class="muted">{{ achievement.studentName }} | {{ achievement.achievementDate | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>

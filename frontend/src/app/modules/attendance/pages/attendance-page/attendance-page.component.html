@@ -1,0 +1,36 @@
+<section class="grid cards-3">
+  <article class="panel form-panel" *ngIf="vm$ | async as vm">
+    <div class="section-title">
+      <h2>Chamada rápida</h2>
+      <span class="muted">marque em segundos</span>
+    </div>
+    <form [formGroup]="form" class="stack" (ngSubmit)="save()">
+      <div class="field-grid">
+        <select formControlName="studentId">
+          <option value="">Selecione o aluno</option>
+          <option *ngFor="let student of vm.students" [value]="student.id">{{ student.fullName }}</option>
+        </select>
+        <input formControlName="attendanceDate" type="date">
+        <select formControlName="status">
+          <option value="PRESENT">Presente</option>
+          <option value="ABSENT">Faltou</option>
+        </select>
+        <input formControlName="notes" placeholder="Observações">
+      </div>
+      <button class="btn accent" type="submit" [disabled]="form.invalid">Registrar</button>
+    </form>
+  </article>
+
+  <article class="panel list-panel" *ngIf="vm$ | async as vm">
+    <div class="section-title">
+      <h2>Alertas de responsáveis</h2>
+      <span class="pill warning">{{ vm.alerts.length }} ativos</span>
+    </div>
+    <div class="stack">
+      <div class="alert-row" *ngFor="let item of vm.alerts">
+        <strong>{{ item.studentName }}</strong>
+        <span class="muted">Falta consecutiva em {{ item.attendanceDate | date:'dd/MM/yyyy' }}</span>
+      </div>
+    </div>
+  </article>
+</section>

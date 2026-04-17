@@ -1,0 +1,24 @@
+.card {
+  padding: 22px;
+}
+
+.big-number {
+  margin: 18px 0 6px;
+  font-size: 54px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.quote {
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.achievement-row {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  display: grid;
+  gap: 4px;
+}

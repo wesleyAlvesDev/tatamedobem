@@ -1,0 +1,14 @@
+.form-panel,
+.list-panel {
+  padding: 22px;
+}
+
+.list-panel {
+  grid-column: span 2;
+}
+
+@media (max-width: 900px) {
+  .list-panel {
+    grid-column: span 1;
+  }
+}

@@ -1,0 +1,42 @@
+<section class="grid cards-3">
+  <article class="panel card" *ngIf="vm$ | async as vm">
+    <div class="section-title">
+      <h2>Relatório mensal de frequência</h2>
+      <span class="muted">meta mínima 70%</span>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="reload()">
+      <div class="field-grid">
+        <input formControlName="month" type="month">
+        <button class="btn" type="submit">Atualizar</button>
+      </div>
+    </form>
+    <p class="big-number">{{ vm.monthly.attendancePercentage }}%</p>
+    <p class="muted">
+      {{ vm.monthly.totalPresents }} presenças e {{ vm.monthly.totalAbsences }} faltas em {{ vm.monthly.month }}.
+    </p>
+    <span class="pill" [class.success]="vm.monthly.meetsMinimumAttendance" [class.warning]="!vm.monthly.meetsMinimumAttendance">
+      {{ vm.monthly.meetsMinimumAttendance ? 'Meta atendida' : 'Abaixo do mínimo' }}
+    </span>
+  </article>
+
+  <article class="panel card" *ngIf="vm$ | async as vm">
+    <div class="section-title">
+      <h2>Prestação de contas</h2>
+      <span class="muted">texto pronto</span>
+    </div>
+    <p class="quote">{{ vm.report.impactMessage }}</p>
+  </article>
+
+  <article class="panel card" *ngIf="vm$ | async as vm">
+    <div class="section-title">
+      <h2>Conquistas recentes</h2>
+      <span class="muted">marketing emocional</span>
+    </div>
+    <div class="stack">
+      <div class="achievement-row" *ngFor="let item of vm.achievements.slice(0, 4)">
+        <strong>{{ item.title }}</strong>
+        <span class="muted">{{ item.studentName }} • {{ item.achievementDate | date:'dd/MM/yyyy' }}</span>
+      </div>
+    </div>
+  </article>
+</section>

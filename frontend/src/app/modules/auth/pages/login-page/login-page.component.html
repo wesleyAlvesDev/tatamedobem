@@ -1,0 +1,17 @@
+<section class="auth-shell">
+  <article class="auth-card panel">
+    <p class="eyebrow">Acesso ao sistema</p>
+    <h1>Tatame do Bem</h1>
+    <p class="muted">Entre com CPF e senha para acessar o painel administrativo.</p>
+
+    <form [formGroup]="form" class="stack" (ngSubmit)="submit()">
+      <div class="field-grid single">
+        <input formControlName="cpf" placeholder="CPF">
+        <input formControlName="password" type="password" placeholder="Senha">
+      </div>
+      <button class="btn accent" type="submit" [disabled]="form.invalid">Entrar</button>
+    </form>
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </article>
+</section>

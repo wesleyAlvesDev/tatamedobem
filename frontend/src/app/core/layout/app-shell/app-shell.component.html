@@ -1,0 +1,24 @@
+<div class="page-shell">
+  <header class="hero panel">
+    <div>
+      <p class="eyebrow">Projeto social de Jiu-Jitsu</p>
+      <h1>Tatame do Bem</h1>
+      <p class="muted intro">
+        Gestao de alunos, frequencia, saude, materiais e resultados em uma interface simples para secretaria e professor.
+      </p>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+      <a routerLink="/alunos" routerLinkActive="active">Alunos</a>
+      <a routerLink="/frequencia" routerLinkActive="active">Frequencia</a>
+      <a routerLink="/relatorios" routerLinkActive="active">Relatorios</a>
+      <a routerLink="/usuarios/cadastro" routerLinkActive="active">Usuarios</a>
+      <button class="logout-button" type="button" *ngIf="authService.currentUser$ | async as user" (click)="authService.logout()">
+        Sair | {{ user.fullName }}
+      </button>
+    </nav>
+  </header>
+
+  <router-outlet></router-outlet>
+</div>
