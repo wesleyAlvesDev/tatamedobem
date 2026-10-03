@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final UserAccessHistoryService userAccessHistoryService;
 
     public AuthResponse register(AuthRegisterRequest request) {
         String normalizedCpf = normalizeCpf(request.cpf());
@@ -44,15 +46,21 @@ public class AuthService {
         return buildAuthResponse(savedUser);
     }
 
-    @Transactional(readOnly = true)
-    public AuthResponse login(AuthLoginRequest request) {
+    public AuthResponse login(AuthLoginRequest request, String ipAddress, String userAgent) {
         String normalizedCpf = normalizeCpf(request.cpf());
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(normalizedCpf, request.password())
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(normalizedCpf, request.password())
+            );
+        } catch (AuthenticationException ex) {
+            appUserRepository.findByCpf(normalizedCpf)
+                    .ifPresent(user -> userAccessHistoryService.registerAccess(user, ipAddress, userAgent, false));
+            throw ex;
+        }
 
         AppUser user = appUserRepository.findByCpf(normalizedCpf)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario nao encontrado."));
+        userAccessHistoryService.registerAccess(user, ipAddress, userAgent, true);
         return buildAuthResponse(user);
     }
 
